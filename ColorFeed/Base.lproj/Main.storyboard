@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Checkout-->
+        <!--Feed Table View Controller-->
         <scene sceneID="3yb-If-Eu3">
             <objects>
                 <tableViewController id="g8p-ft-a8D" customClass="FeedTableViewController" customModule="ColorFeed" customModuleProvider="target" sceneMemberID="viewController">
@@ -40,7 +40,7 @@
                             <outlet property="delegate" destination="g8p-ft-a8D" id="GqO-RT-D3B"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Checkout" id="ZYa-Ze-LZI">
+                    <navigationItem key="navigationItem" id="ZYa-Ze-LZI">
                         <barButtonItem key="leftBarButtonItem" title="Checkin" id="aJY-nS-pth">
                             <connections>
                                 <action selector="checkin_sim:" destination="g8p-ft-a8D" id="SyW-44-wb2"/>

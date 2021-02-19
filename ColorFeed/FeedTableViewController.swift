@@ -135,25 +135,27 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
     
     @IBAction func checkin_sim(_ sender: Any) {
         print("Clicked")
-        let alert = UIAlertController(title: "Simulation", message: "Please insert taxi number", preferredStyle: .alert)
+        if (sharepreference.object(forKey: "checked_in") == nil || sharepreference.object(forKey: "checked_in")! as! Bool == false)  {
+            let alert = UIAlertController(title: "Simulation", message: "Please insert taxi number", preferredStyle: .alert)
 
-        //2. Add the text field. You can configure it however you need.
-        alert.addTextField { (textField) in
-            textField.text = "AA 1234"
+            //2. Add the text field. You can configure it however you need.
+            alert.addTextField { (textField) in
+                textField.text = "AA 1234"
+            }
+
+            // 3. Grab the value from the text field, and print it when the user clicks OK.
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+                let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
+                
+                self.checkin_Taxi()
+                self.sharepreference.set(true, forKey:"checked_in")
+                self.sharepreference.set(textField?.text,forKey: "taxi_number")
+                print("Text field: \(String(describing: textField?.text))")
+            }))
+
+            // 4. Present the alert.
+            self.present(alert, animated: true, completion: nil)
         }
-
-        // 3. Grab the value from the text field, and print it when the user clicks OK.
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-            let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
-            
-            self.checkin_Taxi()
-            self.sharepreference.set(true, forKey:"checked_in")
-            self.sharepreference.set(textField?.text,forKey: "taxi_number")
-            print("Text field: \(textField?.text)")
-        }))
-
-        // 4. Present the alert.
-        self.present(alert, animated: true, completion: nil)
     }
     
     func checkin_Taxi() {
