@@ -26,11 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let sharepreference = UserDefaults.standard
-        let cmOpt = CoreMotionOperation()
-        cmOpt.main()
-        sharepreference.set(Date(),forKey: "last_run_time")
-        
         // MARK: Registering Launch Handlers for Tasks
         
     
@@ -60,9 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-//        BGTaskScheduler.shared.cancelAllTaskRequests()
-//        scheduleAppRefresh()
-//        scheduleDatabaseCleaningIfNeeded()
     }
     
     
@@ -105,7 +97,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let success = !cmOpt.isCancelled
             if success {
                 // Update the last clean date to the current time.
-//                PersistentContainer.shared.lastCleaned = Date()
                 print("Success")
                 
                 
