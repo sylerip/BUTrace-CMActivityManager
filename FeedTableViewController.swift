@@ -145,6 +145,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
         // 3. Grab the value from the text field, and print it when the user clicks OK.
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
             let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
+            
             self.checkin_Taxi()
             self.sharepreference.set(true, forKey:"checked_in")
             self.sharepreference.set(textField?.text,forKey: "taxi_number")
@@ -166,6 +167,8 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
             sharepreference.set(checkout_arr,forKey: "checkin_time_arr")
         }
         sharepreference.set(Date(), forKey:"last_run_time")
+        let cmOpt = CoreMotionOperation()
+        cmOpt.main()
         AppDelegate().scheduleCoreMotionBGTask()
     }
     
