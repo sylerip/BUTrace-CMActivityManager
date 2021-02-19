@@ -21,25 +21,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let motionManager = CMMotionManager()
     
-//    private let server: Server = MockServer()
-    
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        // MARK: Registering Launch Handlers for Tasks
-        
     
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.example.apple-samplecode.ColorFeed.cm_motion", using: nil) { task in
-            // Downcast the parameter to a processing task as this identifier is used for a processing request.
             self.handleCoreMotion(task: task as! BGProcessingTask)
         }
-        
-//        scheduleAppRefresh()
-//        scheduleCoreMotionBGTask()
+
         return true
     }
     func applicationDidBecomeActive(_: UIApplication){
-//        NotificationCenter.default.post(name: NSNotification.Name("ReloadNotification"), object: nil)
         print("call")
         let sharepreference = UserDefaults.standard
         if (sharepreference.object(forKey: "checked_in") != nil) && sharepreference.object(forKey: "checked_in")as!Bool == true {
@@ -65,17 +55,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let request = BGProcessingTaskRequest(identifier: "com.example.apple-samplecode.ColorFeed.cm_motion")
         request.requiresNetworkConnectivity = false
         request.requiresExternalPower = false
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 60)
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 60*15)
         do {
             try BGTaskScheduler.shared.submit(request)
         } catch {
             print("Could not schedule Task: \(error)")
         }
     }
-    
-    // MARK: - Handling Launch for Tasks
 
-    
     
     func handleCoreMotion(task: BGProcessingTask) {
         print("run BGProcessingTask")
@@ -90,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         task.expirationHandler = {
             // After all operations are cancelled, the completion block below is called to set the task to complete.
-//            queue.cancelAllOperations()
+            queue.cancelAllOperations()
         }
         
         cmOpt.completionBlock = {
@@ -98,14 +85,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if success {
                 // Update the last clean date to the current time.
                 print("Success")
-                
-                
+            }
+            task.setTaskCompleted(success: success)
+            let sharepreference = UserDefaults.standard
+            if (sharepreference.object(forKey: "checked_in") != nil) && sharepreference.object(forKey: "checked_in")as!Bool == true {
+                self.scheduleCoreMotionBGTask()
             }
             
-            task.setTaskCompleted(success: success)
-            BGTaskScheduler.shared.cancelAllTaskRequests()
-            // if checked out this one do not need to start
-            self.scheduleCoreMotionBGTask()
         }
         
         queue.addOperation(cmOpt)

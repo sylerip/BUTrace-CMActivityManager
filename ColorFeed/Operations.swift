@@ -26,8 +26,11 @@ class CoreMotionOperation: Operation {
                                                                 
                                                                 for motionActivity in motionActivities! {
                                                                     if motionActivity.confidence == CMMotionActivityConfidence.high&&(motionActivity.running||motionActivity.walking) {
-                                                                        print(motionActivity)
-                                                                        print(q_time.addingTimeInterval(30))
+                                                                        // Can directly call checkout function for real application
+                                                                        // Apple suggest to push a local notification to user as if they wanna checkout
+                                                                        // The logic below is to prevent checkout too short for testing purpose
+                                                                        
+//                                                                        print(motionActivity)
                                                                         if motionActivity.startDate > q_time.addingTimeInterval(10) {
                                                                             self.checkout(activity: motionActivity)
                                                                             sharepreference.set(motionActivity.startDate,forKey: "last_run_time")
@@ -40,11 +43,9 @@ class CoreMotionOperation: Operation {
         }
     }
     func checkout(activity: CMMotionActivity){
-        // can schuale a local notification to ask if wanna check and enter the app foreground if clicked the notification
-        
-        print("checkout")
-        print(activity)
-//        print(activity.startDate)
+        // This checkout function is for storing demo data only
+//        print("checkout")
+//        print(activity)
         BGTaskScheduler.shared.cancelAllTaskRequests()
         let sharepreference = UserDefaults.standard
         var trigger = ""
