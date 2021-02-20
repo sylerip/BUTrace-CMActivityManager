@@ -46,7 +46,7 @@
                                 <action selector="checkin_sim:" destination="g8p-ft-a8D" id="SyW-44-wb2"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Reload" id="sj6-tS-Grs">
+                        <barButtonItem key="rightBarButtonItem" title="Refresh" id="sj6-tS-Grs">
                             <connections>
                                 <action selector="reloadTableView:" destination="g8p-ft-a8D" id="XSC-5V-hAK"/>
                             </connections>
