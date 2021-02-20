@@ -18,14 +18,17 @@ In this sample project, the code below is packed as an operation and called from
                                                             to: OperationQueue.main) { (motionActivities, error) in
                                                                 
                                                                 for motionActivity in motionActivities! {
-                                                                    if (motionActivity.confidence == CMMotionActivityConfidence.high )&&(motionActivity.running||motionActivity.walking) {
-                                                                        // Can directly call checkout function for real application
-                                                                        // The logic below is to prevent checkout too short for testing purpose
-                                                                        
+                                                                    print(motionActivity)
+                                                                    if (motionActivity.confidence == CMMotionActivityConfidence.high  )&&(motionActivity.running||motionActivity.walking) {
+                                                                        // may use the following logic to integrate with X-hour auto check-out
+                                                                        // if motionActivity.startDate > q_time.addingTimeInterval(X-hour) {
+                                                                        //     use X-hour for check-out
+                                                                        //     cancel BGTaskScheduler
+                                                                        //     break
+                                                                        // }
 //                                                                        print(motionActivity)
-                                                                        if motionActivity.startDate > q_time.addingTimeInterval(10) {
+                                                                        if motionActivity.startDate > q_time.addingTimeInterval(self.init_grace_period) {
                                                                             self.checkout(activity: motionActivity)
-                                                                            sharepreference.set(motionActivity.startDate,forKey: "last_run_time")
                                                                             break
                                                                         }
                                                                     }
