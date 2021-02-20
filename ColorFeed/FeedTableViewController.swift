@@ -86,7 +86,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
     
     @objc func reloadData() {
         print("reloadData")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { // Change `2.0` to the desired number of seconds.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { 
            // Code you want to be delayed
             if (self.sharepreference.object(forKey: "checkout_act_arr") != nil)  {
                 self.checkout_act_arr = self.sharepreference.object(forKey: "checkout_act_arr")as! Array<String>
@@ -168,6 +168,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
             checkout_arr.append(Date())
             sharepreference.set(checkout_arr,forKey: "checkin_time_arr")
         }
+        print(sharepreference.array(forKey: "checkin_time_arr"))
         sharepreference.set(Date(), forKey:"last_run_time")
         let cmOpt = CoreMotionOperation()
         cmOpt.main()

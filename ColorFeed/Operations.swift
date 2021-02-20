@@ -44,7 +44,7 @@ class CoreMotionOperation: Operation {
     }
     func checkout(activity: CMMotionActivity){
         // This checkout function is for storing demo data only
-//        print("checkout")
+        print("checkout")
 //        print(activity)
         BGTaskScheduler.shared.cancelAllTaskRequests()
         let sharepreference = UserDefaults.standard
