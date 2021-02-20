@@ -81,7 +81,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
             // set the text from the data model
             cell.textLabel!.lineBreakMode = .byWordWrapping
             cell.textLabel!.numberOfLines = 0
-        cell.textLabel!.text = "Taxi No:      "+taxi_no_list[indexPath.row]+" \nCheckin:    "+dateFormatter.string(from: inDate)+" \nCheckout:  "+dateFormatter.string(from: date)+" \nTrigger:       "+checkout_act_arr[indexPath.row]+" \nTriggered By:"+trigger_list[indexPath.row]
+        cell.textLabel!.text = "Taxi No:      "+taxi_no_list[indexPath.row]+" \nCheckin:    "+dateFormatter.string(from: inDate)+" \nCheckout:  "+dateFormatter.string(from: date)+" \nTrigger:       "+checkout_act_arr[indexPath.row]+" \nTriggered By: "+trigger_list[indexPath.row]
             cell.textLabel!.textAlignment = .left
             
 //            print(dateFormatter.string(from: date))
@@ -170,7 +170,8 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
                 self.checkin_Taxi()
                 self.sharepreference.set(true, forKey:"checked_in")
                 self.sharepreference.set(textField?.text,forKey: "taxi_number")
-                self.barTitle.title = "Taxi no:"+(textField?.text)!
+                self.barTitle.title = "In Taxi: "+(textField?.text)!
+                
                 print("Text field: \(String(describing: textField?.text))")
             }))
 
@@ -191,7 +192,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
         }
         
 //        print(sharepreference.array(forKey: "checkin_time_arr"))
-        sharepreference.set(Date(), forKey:"last_run_time")
+        sharepreference.set(Date(), forKey:"taxi_checkin_time")
         let cmOpt = CoreMotionOperation(callflag: "Foreground")
         cmOpt.main()
         AppDelegate().scheduleCoreMotionBGTask()

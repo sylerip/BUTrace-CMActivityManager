@@ -14,6 +14,8 @@ class CoreMotionOperation: Operation {
     var uploadstr = ""
     var flag = true
     var callflag = ""
+    let init_grace_period = 5.0
+    
     init(callflag: String) {
         self.callflag = callflag
     }
@@ -21,8 +23,8 @@ class CoreMotionOperation: Operation {
         let sharepreference = UserDefaults.standard
         let motionActivityManager = CMMotionActivityManager()
         if CMMotionActivityManager.isActivityAvailable() {
-            if (sharepreference.object(forKey: "last_run_time") != nil)  {
-                let q_time = sharepreference.object(forKey: "last_run_time")as! Date
+            if (sharepreference.object(forKey: "taxi_checkin_time") != nil)  {
+                let q_time = sharepreference.object(forKey: "taxi_checkin_time")as! Date
                 motionActivityManager.queryActivityStarting(from: q_time,
                                                             to: Date(),
                                                             to: OperationQueue.main) { (motionActivities, error) in
@@ -30,13 +32,15 @@ class CoreMotionOperation: Operation {
                                                                 for motionActivity in motionActivities! {
                                                                     print(motionActivity)
                                                                     if (motionActivity.confidence == CMMotionActivityConfidence.high  )&&(motionActivity.running||motionActivity.walking) {
-                                                                        // Can directly call checkout function for real application
-                                                                        // The logic below is to prevent checkout too short for testing purpose
-                                                                        
+                                                                        // may use the following logic to integrate with X-hour auto check-out
+                                                                        // if motionActivity.startDate > q_time.addingTimeInterval(X-hour) {
+                                                                        //     use X-hour for check-out
+                                                                        //     cancel BGTaskScheduler
+                                                                        //     break
+                                                                        // }
 //                                                                        print(motionActivity)
-                                                                        if motionActivity.startDate > q_time.addingTimeInterval(5) {
+                                                                        if motionActivity.startDate > q_time.addingTimeInterval(self.init_grace_period) {
                                                                             self.checkout(activity: motionActivity)
-//                                                                            sharepreference.set(Date(),forKey: "last_run_time")
                                                                             break
                                                                         }
                                                                     }
@@ -97,5 +101,6 @@ class CoreMotionOperation: Operation {
             sharepreference.set(checkout_arr,forKey: "checkout_trigger_arr")
         }
         sharepreference.set(false,forKey: "checked_in")
+        sharepreference.removeObject(forKey: "taxi_checkin_time")
     }
 }
