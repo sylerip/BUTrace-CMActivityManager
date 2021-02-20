@@ -18,7 +18,7 @@ In this sample project, the code below is packed as an operation and called from
                                                             to: OperationQueue.main) { (motionActivities, error) in
                                                                 
                                                                 for motionActivity in motionActivities! {
-                                                                    if motionActivity.confidence == CMMotionActivityConfidence.high&&(motionActivity.running||motionActivity.walking) {
+                                                                    if (motionActivity.confidence == CMMotionActivityConfidence.high )&&(motionActivity.running||motionActivity.walking) {
                                                                         // Can directly call checkout function for real application
                                                                         // Apple suggest to push a local notification to user as if they wanna checkout
                                                                         // The logic below is to prevent checkout too short for testing purpose

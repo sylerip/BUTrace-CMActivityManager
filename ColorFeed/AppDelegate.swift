@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("call")
         let sharepreference = UserDefaults.standard
         if (sharepreference.object(forKey: "checked_in") != nil) && sharepreference.object(forKey: "checked_in")as!Bool == true {
-            let cmOpt = CoreMotionOperation()
+            let cmOpt = CoreMotionOperation(callflag: "Foreground")
             cmOpt.main()
             BGTaskScheduler.shared.cancelAllTaskRequests()
             AppDelegate().scheduleCoreMotionBGTask()
@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         queue.maxConcurrentOperationCount = 1
 
 
-        let cmOpt = CoreMotionOperation()
+        let cmOpt = CoreMotionOperation(callflag: "BGProcessTask")
         
 
         task.expirationHandler = {

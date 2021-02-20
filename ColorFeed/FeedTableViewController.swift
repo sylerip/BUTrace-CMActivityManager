@@ -13,12 +13,14 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
     
     @IBOutlet var checkoutDataTableView: UITableView!
     
+    @IBOutlet weak var barTitle: UINavigationItem!
     let cellReuseIdentifier = "cell"
     let sharepreference = UserDefaults.standard
     var checkout_act_arr: [String] = []
     var checkout_Date: [Date] = []
     var checkin_Date: [Date] = []
     var taxi_no_list: [String] = []
+    var trigger_list: [String] = []
     
     override func viewDidLoad() {
             super.viewDidLoad()
@@ -45,11 +47,18 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
                 taxi_no_list = sharepreference.object(forKey: "checkout_taxi_arr")as! Array<String>
                 
             }
-
+            
+            if (sharepreference.object(forKey: "checkout_trigger_arr") != nil)  {
+                trigger_list = sharepreference.object(forKey: "checkout_trigger_arr")as! Array<String>
+                
+            }
             self.checkoutDataTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
             // This view controller itself will provide the delegate methods and row data for the table view.
             tableView.delegate = self
             tableView.dataSource = self
+            if (self.sharepreference.object(forKey: "checked_in") == nil || self.sharepreference.object(forKey: "checked_in")! as! Bool == false)  {
+                self.barTitle.title = ""
+            }
         }
         
         // number of rows in table view
@@ -72,7 +81,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
             // set the text from the data model
             cell.textLabel!.lineBreakMode = .byWordWrapping
             cell.textLabel!.numberOfLines = 0
-            cell.textLabel!.text = "Taxi No:      "+taxi_no_list[indexPath.row]+" \nCheckin:    "+dateFormatter.string(from: inDate)+" \nCheckout:  "+dateFormatter.string(from: date)+" \nTrigger:       "+checkout_act_arr[indexPath.row]
+        cell.textLabel!.text = "Taxi No:      "+taxi_no_list[indexPath.row]+" \nCheckin:    "+dateFormatter.string(from: inDate)+" \nCheckout:  "+dateFormatter.string(from: date)+" \nTrigger:       "+checkout_act_arr[indexPath.row]+" \nTriggered By:"+trigger_list[indexPath.row]
             cell.textLabel!.textAlignment = .left
             
 //            print(dateFormatter.string(from: date))
@@ -104,7 +113,14 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
                 self.taxi_no_list = self.sharepreference.object(forKey: "checkout_taxi_arr")as! Array<String>
                 
             }
+            if (self.sharepreference.object(forKey: "checkout_trigger_arr") != nil)  {
+                self.trigger_list = self.sharepreference.object(forKey: "checkout_trigger_arr")as! Array<String>
+                
+            }
             self.checkoutDataTableView.reloadData()
+            if (self.sharepreference.object(forKey: "checked_in") == nil || self.sharepreference.object(forKey: "checked_in")! as! Bool == false)  {
+                self.barTitle.title = ""
+            }
         }
         
     }
@@ -130,6 +146,10 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
             taxi_no_list = sharepreference.object(forKey: "checkout_taxi_arr")as! Array<String>
             
         }
+        if (sharepreference.object(forKey: "checkout_trigger_arr") != nil)  {
+            trigger_list = sharepreference.object(forKey: "checkout_trigger_arr")as! Array<String>
+            
+        }
         checkoutDataTableView.reloadData()
     }
     
@@ -150,6 +170,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
                 self.checkin_Taxi()
                 self.sharepreference.set(true, forKey:"checked_in")
                 self.sharepreference.set(textField?.text,forKey: "taxi_number")
+                self.barTitle.title = "Taxi no:"+(textField?.text)!
                 print("Text field: \(String(describing: textField?.text))")
             }))
 
@@ -168,9 +189,10 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
             checkout_arr.append(Date())
             sharepreference.set(checkout_arr,forKey: "checkin_time_arr")
         }
-        print(sharepreference.array(forKey: "checkin_time_arr"))
+        
+//        print(sharepreference.array(forKey: "checkin_time_arr"))
         sharepreference.set(Date(), forKey:"last_run_time")
-        let cmOpt = CoreMotionOperation()
+        let cmOpt = CoreMotionOperation(callflag: "Foreground")
         cmOpt.main()
         AppDelegate().scheduleCoreMotionBGTask()
     }

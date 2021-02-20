@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSMotionUsageDescription</key>
-	<string>Testing</string>
+	<string>Motion data is used to automatically determine when you leave the taxi.</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>com.example.apple-samplecode.ColorFeed.refresh</string>

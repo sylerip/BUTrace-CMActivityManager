@@ -53,6 +53,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="barTitle" destination="ZYa-Ze-LZI" id="JQl-4s-N8J"/>
                         <outlet property="checkoutDataTableView" destination="2ZL-TP-1dN" id="zdC-U9-KCq"/>
                     </connections>
                 </tableViewController>
