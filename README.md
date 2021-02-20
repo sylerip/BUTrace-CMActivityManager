@@ -11,8 +11,8 @@ In this sample project, the code below is packed as an operation and called from
 ```swift 
 	let motionActivityManager = CMMotionActivityManager()
         if CMMotionActivityManager.isActivityAvailable() {
-            if (sharepreference.object(forKey: "last_run_time") != nil)  {
-                let q_time = sharepreference.object(forKey: "last_run_time")as! Date
+            if (sharepreference.object(forKey: "taxi_checkin_time") != nil)  {
+                let q_time = sharepreference.object(forKey: "taxi_checkin_time")as! Date
                 motionActivityManager.queryActivityStarting(from: q_time,
                                                             to: Date(),
                                                             to: OperationQueue.main) { (motionActivities, error) in
