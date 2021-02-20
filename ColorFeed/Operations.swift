@@ -36,7 +36,7 @@ class CoreMotionOperation: Operation {
 //                                                                        print(motionActivity)
                                                                         if motionActivity.startDate > q_time.addingTimeInterval(5) {
                                                                             self.checkout(activity: motionActivity)
-                                                                            sharepreference.set(Date(),forKey: "last_run_time")
+//                                                                            sharepreference.set(Date(),forKey: "last_run_time")
                                                                             break
                                                                         }
                                                                     }
