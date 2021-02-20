@@ -28,14 +28,15 @@ class CoreMotionOperation: Operation {
                                                             to: OperationQueue.main) { (motionActivities, error) in
                                                                 
                                                                 for motionActivity in motionActivities! {
+                                                                    print(motionActivity)
                                                                     if (motionActivity.confidence == CMMotionActivityConfidence.high  )&&(motionActivity.running||motionActivity.walking) {
                                                                         // Can directly call checkout function for real application
                                                                         // The logic below is to prevent checkout too short for testing purpose
                                                                         
 //                                                                        print(motionActivity)
-                                                                        if motionActivity.startDate > q_time.addingTimeInterval(10) {
+                                                                        if motionActivity.startDate > q_time.addingTimeInterval(5) {
                                                                             self.checkout(activity: motionActivity)
-                                                                            sharepreference.set(motionActivity.startDate,forKey: "last_run_time")
+                                                                            sharepreference.set(Date(),forKey: "last_run_time")
                                                                             break
                                                                         }
                                                                     }

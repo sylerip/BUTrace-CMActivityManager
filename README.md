@@ -1,12 +1,12 @@
-# This is an sample app for using CMMotionActivityManager and BGProcessingTaskRequest
+# This is a sample app for using CMMotionActivityManager and BGProcessingTaskRequest
 
-Use scheduled background tasks for getting CMMotionActivity and determine if checkout should be reminded.
+Use scheduled background tasks for getting CMMotionActivity and determine if checkout should be recorded.
 
 ## Main usage
 
-The code below can be pack call when checked in and the app is back to foreground or app open. Also, it can be call from BGProcessingTask. 
+The code below can be pack called when checked in and the app is back to foreground or reopened. Also, it can be called from BGProcessingTask.
 
-In this sample project, the code below is packed as an operation and called from BGProcessingTask. The operation also be called at applicationDidBecomeActive in AppDelegate.
+In this sample project, the code below is packed as an operation and called from BGProcessingTask. The operation can also be called at applicationDidBecomeActive in AppDelegate.
 
 ```swift 
 	let motionActivityManager = CMMotionActivityManager()
@@ -20,7 +20,6 @@ In this sample project, the code below is packed as an operation and called from
                                                                 for motionActivity in motionActivities! {
                                                                     if (motionActivity.confidence == CMMotionActivityConfidence.high )&&(motionActivity.running||motionActivity.walking) {
                                                                         // Can directly call checkout function for real application
-                                                                        // Apple suggest to push a local notification to user as if they wanna checkout
                                                                         // The logic below is to prevent checkout too short for testing purpose
                                                                         
 //                                                                        print(motionActivity)
