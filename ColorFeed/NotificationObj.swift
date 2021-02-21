@@ -27,7 +27,7 @@ class NotificationObj{
         content.userInfo = ["customData": "fizzbuzz"]
         content.sound = UNNotificationSound.default
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5 , repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10 , repeats: false)
         let request = UNNotificationRequest(identifier: identifyForNotification, content: content, trigger: trigger)
 
         center.add(request, withCompletionHandler: {(_ error: Error?) -> Void in
@@ -46,7 +46,7 @@ class NotificationObj{
         content.userInfo = ["customData": "fizzbuzz"]
         content.sound = UNNotificationSound.default
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5 , repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10 , repeats: false)
         let request = UNNotificationRequest(identifier: identifyForNotification, content: content, trigger: trigger)
 
         center.add(request, withCompletionHandler: {(_ error: Error?) -> Void in
