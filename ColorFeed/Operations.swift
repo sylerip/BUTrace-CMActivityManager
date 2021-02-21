@@ -45,6 +45,9 @@ class CoreMotionOperation: Operation {
                                                                         }
                                                                     }
                                                                 }
+                                                                // If nothing detected start the Schedualer again
+                                                                BGTaskScheduler.shared.cancelAllTaskRequests()
+                                                                AppDelegate().scheduleCoreMotionBGTask()
                 }
             }
         }

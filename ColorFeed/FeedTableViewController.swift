@@ -28,7 +28,14 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
             // Register the table view cell class and its reuse id
         
             NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: NSNotification.Name("ReloadNotification"), object: nil)
-            
+            let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+            let notificationCenter = UNUserNotificationCenter.current()
+            notificationCenter.requestAuthorization(options: options) {
+                (didAllow, error) in
+                if !didAllow {
+                    print("User has declined notifications")
+                }
+            }
             // (optional) include this line if you want to remove the extra empty cell divider lines
             // self.tableView.tableFooterView = UIView()
             if (sharepreference.object(forKey: "checkout_act_arr") != nil)  {
@@ -52,6 +59,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
                 trigger_list = sharepreference.object(forKey: "checkout_trigger_arr")as! Array<String>
                 
             }
+        
             self.checkoutDataTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
             // This view controller itself will provide the delegate methods and row data for the table view.
             tableView.delegate = self
@@ -68,9 +76,12 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
         
         // create a cell for each table view row
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            
+        if indexPath.row == 0 {
+            sleep(2)
+        }
             // create a new cell if needed or reuse an old one
             let cell:UITableViewCell = (checkoutDataTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
+        
             let date = checkout_Date[indexPath.row]
             let inDate = checkin_Date[indexPath.row]
 //            print(date)
@@ -95,7 +106,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
     
     @objc func reloadData() {
         print("reloadData")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { 
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
            // Code you want to be delayed
             if (self.sharepreference.object(forKey: "checkout_act_arr") != nil)  {
                 self.checkout_act_arr = self.sharepreference.object(forKey: "checkout_act_arr")as! Array<String>
@@ -195,7 +206,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
         sharepreference.set(Date(), forKey:"taxi_checkin_time")
         let cmOpt = CoreMotionOperation(callflag: "Foreground")
         cmOpt.main()
-        AppDelegate().scheduleCoreMotionBGTask()
+//        AppDelegate().scheduleCoreMotionBGTask()
     }
     
 }

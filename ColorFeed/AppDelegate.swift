@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let motionManager = CMMotionManager()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    
+        // The BGProcessingTask and BGTaskScheduler can only be run on IOS 13 or above. If the user device is lower that that, can only run at the Operation in applicationDidBecomeActive without background support
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.example.apple-samplecode.ColorFeed.cm_motion", using: nil) { task in
             self.handleCoreMotion(task: task as! BGProcessingTask)
         }
@@ -35,8 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if (sharepreference.object(forKey: "checked_in") != nil) && sharepreference.object(forKey: "checked_in")as!Bool == true {
             let cmOpt = CoreMotionOperation(callflag: "Foreground")
             cmOpt.main()
-            BGTaskScheduler.shared.cancelAllTaskRequests()
-            AppDelegate().scheduleCoreMotionBGTask()
         }
         
     }
@@ -55,9 +53,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let request = BGProcessingTaskRequest(identifier: "com.example.apple-samplecode.ColorFeed.cm_motion")
         request.requiresNetworkConnectivity = false
         request.requiresExternalPower = false
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 60*15)
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 60)
         do {
             try BGTaskScheduler.shared.submit(request)
+            NotificationObj.bgTaskRegisterNotification()
         } catch {
             print("Could not schedule Task: \(error)")
         }
@@ -85,6 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if success {
                 // Update the last clean date to the current time.
                 print("Success")
+                NotificationObj.bgTaskNotification()
             }
             task.setTaskCompleted(success: success)
             let sharepreference = UserDefaults.standard
