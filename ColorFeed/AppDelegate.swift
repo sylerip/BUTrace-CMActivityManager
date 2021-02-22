@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let request = BGProcessingTaskRequest(identifier: "com.example.apple-samplecode.ColorFeed.cm_motion")
         request.requiresNetworkConnectivity = false
         request.requiresExternalPower = false
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 60)
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 60*10)
         do {
             try BGTaskScheduler.shared.submit(request)
             NotificationObj.bgTaskRegisterNotification()
