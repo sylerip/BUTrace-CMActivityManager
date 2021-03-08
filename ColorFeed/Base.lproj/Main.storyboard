@@ -41,11 +41,23 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="ZYa-Ze-LZI">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="Checkin" id="aJY-nS-pth">
                             <connections>
                                 <action selector="checkin_sim:" destination="g8p-ft-a8D" id="SyW-44-wb2"/>
                             </connections>
                         </barButtonItem>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="gJM-jr-m8a">
+                            <rect key="frame" x="137.5" y="5.5" width="139" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Checkin"/>
+                                <segment title="Motion"/>
+                            </segments>
+                            <connections>
+                                <action selector="modeChange:" destination="g8p-ft-a8D" eventType="touchUpInside" id="wGZ-gb-g59"/>
+                            </connections>
+                        </segmentedControl>
                         <barButtonItem key="rightBarButtonItem" title="Refresh" id="sj6-tS-Grs">
                             <connections>
                                 <action selector="reloadTableView:" destination="g8p-ft-a8D" id="XSC-5V-hAK"/>
@@ -54,7 +66,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="barTitle" destination="ZYa-Ze-LZI" id="JQl-4s-N8J"/>
+                        <outlet property="btn_checkin" destination="aJY-nS-pth" id="3o0-1a-N31"/>
                         <outlet property="checkoutDataTableView" destination="2ZL-TP-1dN" id="zdC-U9-KCq"/>
+                        <outlet property="mode_segment" destination="gJM-jr-m8a" id="fje-mn-1Xr"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C43-9O-DaC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -31,7 +31,7 @@ class CoreMotionOperation: Operation {
                                                                 
                                                                 for motionActivity in motionActivities! {
                                                                     print(motionActivity)
-                                                                    if (motionActivity.confidence == CMMotionActivityConfidence.high  )&&(motionActivity.running||motionActivity.walking) {
+                                                                    if (motionActivity.confidence == CMMotionActivityConfidence.high  )&&(motionActivity.running||motionActivity.walking)&&motionActivity.automotive==false {
                                                                         // may use the following logic to integrate with X-hour auto check-out
                                                                         // if motionActivity.startDate > q_time.addingTimeInterval(X-hour) {
                                                                         //     use X-hour for check-out
