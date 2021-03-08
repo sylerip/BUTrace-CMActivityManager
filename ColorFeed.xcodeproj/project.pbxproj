@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		296820B225E207D20064AD14 /* NotificationObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296820B125E207D20064AD14 /* NotificationObj.swift */; };
+		29DC0D9625F625C10093F303 /* SearchCMMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DC0D9525F625C10093F303 /* SearchCMMotion.swift */; };
 		CAA6E4FC227EBBC900058E06 /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA6E4FB227EBBC900058E06 /* Operations.swift */; };
 		CAB3DF3A227E84E500086869 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB3DF39227E84E500086869 /* AppDelegate.swift */; };
 		CAB3DF3F227E84E500086869 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAB3DF3D227E84E500086869 /* Main.storyboard */; };
@@ -24,6 +25,7 @@
 /* Begin PBXFileReference section */
 		2050A8C4228360D90010CC2B /* ColorFeed.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ColorFeed.entitlements; sourceTree = "<group>"; };
 		296820B125E207D20064AD14 /* NotificationObj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationObj.swift; sourceTree = "<group>"; };
+		29DC0D9525F625C10093F303 /* SearchCMMotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCMMotion.swift; sourceTree = "<group>"; };
 		AAF25960AAF218F000000001 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B9650370B965454000000001 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		B971C5B0B972620000000001 /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				CAB3DF58227EA5BA00086869 /* FeedEntryTableViewCell.swift */,
 				CAB3DF56227EA4F100086869 /* FeedTableViewController.swift */,
 				CAB3DF54227E9AE400086869 /* ColorView.swift */,
+				29DC0D9525F625C10093F303 /* SearchCMMotion.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				CAB3DF59227EA5BA00086869 /* FeedEntryTableViewCell.swift in Sources */,
 				CAFDDA7B227F89AA006846BF /* PersistentContainer.swift in Sources */,
 				CAB3DF51227E8F2700086869 /* Server.swift in Sources */,
+				29DC0D9625F625C10093F303 /* SearchCMMotion.swift in Sources */,
 				CAB3DF55227E9AE400086869 /* ColorView.swift in Sources */,
 				296820B225E207D20064AD14 /* NotificationObj.swift in Sources */,
 				CAB3DF57227EA4F100086869 /* FeedTableViewController.swift in Sources */,

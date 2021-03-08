@@ -22,7 +22,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
     var taxi_no_list: [String] = []
     var trigger_list: [String] = []
     var motion_arr:[String] = []
-    @IBOutlet weak var mode_segment: UISegmentedControl!
+
     @IBOutlet weak var btn_checkin: UIBarButtonItem!
     
     override func viewDidLoad() {
@@ -96,17 +96,15 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
         
         // number of rows in table view
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.mode_segment.selectedSegmentIndex==0 {
+       
             return checkout_act_arr.count
-        } else {
-            return motion_arr.count
-        }
+       
         
     }
         
         // create a cell for each table view row
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if self.mode_segment.selectedSegmentIndex==0 {
+        
             if indexPath.row == 0 {
                 sleep(2)
             }
@@ -127,14 +125,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
                 
     //            print(dateFormatter.string(from: date))
                 return cell
-        } else {
-            let cell:UITableViewCell = (checkoutDataTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
-            cell.textLabel!.lineBreakMode = .byWordWrapping
-            cell.textLabel!.numberOfLines = 0
-            cell.textLabel!.text = motion_arr[indexPath.row]
-            cell.textLabel!.textAlignment = .left
-            return cell
-        }
+        
         
         }
         
@@ -145,7 +136,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
     
     @objc func reloadData() {
         print("reloadData")
-        if self.mode_segment.selectedSegmentIndex==0 {
+        
             DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
                // Code you want to be delayed
                 if (self.sharepreference.object(forKey: "checkout_act_arr") != nil)  {
@@ -173,7 +164,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
                     self.barTitle.title = ""
                 }
             }
-        }
+        
     }
     
     @IBAction func reloadTableView(_ sender: Any) {
@@ -185,12 +176,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
     }
     
     func reloadAllData() {
-        if self.mode_segment.selectedSegmentIndex==0 {
-            btn_checkin.title = "Checkin"
-        } else {
-            btn_checkin.title = "Search Time"
-        }
-        if self.mode_segment.selectedSegmentIndex==0 {
+       
             if (sharepreference.object(forKey: "checkout_act_arr") != nil)  {
                 checkout_act_arr = sharepreference.object(forKey: "checkout_act_arr")as! Array<String>
                 
@@ -213,37 +199,13 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
             }
             checkoutDataTableView.reloadData()
                 
-        } else {
-            let motionActivityManager = CMMotionActivityManager()
-            if CMMotionActivityManager.isActivityAvailable() {
-                motionActivityManager.queryActivityStarting(from: NSDate(timeIntervalSinceNow: -7200) as Date,
-                                                            to: Date(),
-                                                            to: OperationQueue.main) { (motionActivities, error) in
-                    self.motion_arr = []
-                                                                for motionActivity in motionActivities! {
-                                                                    print(motionActivity)
-                                                                    let formatter = DateFormatter()
-                                                                    formatter.dateFormat = "yyyy/MM/dd HH:mm"
-                                                                    formatter.timeZone = NSTimeZone.local
-                                                                    let someDateTime = formatter.string(from: motionActivity.startDate)
-                                                                    var str = "Time: "+someDateTime+""
-                                                                    str+="\nEvent: stationary,"
-                                                                    str+=String(motionActivity.stationary)+",\nwalking,"+String(motionActivity.walking)+",\nrunning,"+String(motionActivity.running)+",\nautomotive,"+String(motionActivity.automotive)+",\ncycling,"+String(motionActivity.cycling)
-                                                                    self.motion_arr.append(str)
-                                                                }
-                    self.checkoutDataTableView.reloadData()
-                                                                
-                                                               
-                }
-                
-            }
-        }
+        
+        
     }
     
     
     @IBAction func checkin_sim(_ sender: Any) {
         print("Clicked")
-        if self.mode_segment.selectedSegmentIndex==0 {
             if (sharepreference.object(forKey: "checked_in") == nil || sharepreference.object(forKey: "checked_in")! as! Bool == false)  {
                 let alert = UIAlertController(title: "Simulation", message: "Please insert taxi number", preferredStyle: .alert)
 
@@ -268,56 +230,8 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
                 self.present(alert, animated: true, completion: nil)
             }
             
-        } else {
-            motion_arr = []
-            let startSearchDatePicker: UIDatePicker = UIDatePicker()
-            startSearchDatePicker.timeZone = NSTimeZone.local
-            startSearchDatePicker.frame = CGRect(x: 0, y: 0, width: 270, height: 150)
-                let alertController = UIAlertController(title: "Please select a start search date\n\n", message: nil, preferredStyle: .alert)
-                alertController.view.addSubview(startSearchDatePicker)
-                let selectAction = UIAlertAction(title: "Ok", style: .default, handler: { _ in
-                    print("Selected Start Date: \(startSearchDatePicker.date)")
-                    let endSearchDatePicker: UIDatePicker = UIDatePicker()
-                    endSearchDatePicker.timeZone = NSTimeZone.local
-                    endSearchDatePicker.frame = CGRect(x: 0, y: 0, width: 270, height: 150)
-                        let alertController = UIAlertController(title: "Please select a end search date\n\n", message: nil, preferredStyle: .alert)
-                        alertController.view.addSubview(endSearchDatePicker)
-                        let selectAction = UIAlertAction(title: "Ok", style: .default, handler: { _ in
-                            print("Selected End Date: \(endSearchDatePicker.date)")
-                            let motionActivityManager = CMMotionActivityManager()
-                            if CMMotionActivityManager.isActivityAvailable() {
-                                motionActivityManager.queryActivityStarting(from: startSearchDatePicker.date,
-                                                                            to: endSearchDatePicker.date,
-                                                                            to: OperationQueue.main) { (motionActivities, error) in
-                                    self.motion_arr=[]
-                                                                                for motionActivity in motionActivities! {
-                                                                                    print(motionActivity)
-                                                                                    let formatter = DateFormatter()
-                                                                                    formatter.dateFormat = "yyyy/MM/dd HH:mm"
-                                                                                    formatter.timeZone = NSTimeZone.local
-                                                                                    let someDateTime = formatter.string(from: motionActivity.startDate)
-                                                                                    var str = "Time: "+someDateTime+"\n"
-                                                                                    str+="Event:\nstationary,"
-                                                                                    str+=String(motionActivity.stationary)+", \n walking,"+String(motionActivity.walking)+", \n running,"+String(motionActivity.running)+", \n automotive,"+String(motionActivity.automotive)+", \n cycling,"+String(motionActivity.cycling)
-                                                                                    self.motion_arr.append(str)
-                                                                                }
-                                    self.checkoutDataTableView.reloadData()
-                                                                                
-                                                                               
-                                }
-                                
-                            }
-                        })
-                        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                        alertController.addAction(selectAction)
-                        alertController.addAction(cancelAction)
-                    self.present(alertController, animated: true)
-                })
-                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                alertController.addAction(selectAction)
-                alertController.addAction(cancelAction)
-                present(alertController, animated: true)
-        }
+        
+            
     }
     
     func checkin_Taxi() {
@@ -337,9 +251,12 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
         cmOpt.main()
 //        AppDelegate().scheduleCoreMotionBGTask()
     }
-    @IBAction func modeChange(_ sender: Any) {
-        NSLog("%i", self.mode_segment.selectedSegmentIndex);
-        
-    }
+
     
+    @IBAction func searchPage(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let secondVC = storyboard.instantiateViewController(identifier: "SearchCMMotionViewController")
+
+        show(secondVC, sender: self)
+    }
 }
