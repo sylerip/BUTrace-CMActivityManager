@@ -226,9 +226,9 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
                                                                     formatter.dateFormat = "yyyy/MM/dd HH:mm"
                                                                     formatter.timeZone = NSTimeZone.local
                                                                     let someDateTime = formatter.string(from: motionActivity.startDate)
-                                                                    var str = "Time: "+someDateTime+"\n"
-                                                                    str+="\nEvent:\n stationary,"
-                                                                    str+=String(motionActivity.stationary)+",walking,"+String(motionActivity.walking)+",running,"+String(motionActivity.running)+",automotive,"+String(motionActivity.automotive)+",cycling,"+String(motionActivity.cycling)
+                                                                    var str = "Time: "+someDateTime+""
+                                                                    str+="\nEvent: stationary,"
+                                                                    str+=String(motionActivity.stationary)+",\nwalking,"+String(motionActivity.walking)+",\nrunning,"+String(motionActivity.running)+",\nautomotive,"+String(motionActivity.automotive)+",\ncycling,"+String(motionActivity.cycling)
                                                                     self.motion_arr.append(str)
                                                                 }
                     self.checkoutDataTableView.reloadData()
@@ -289,7 +289,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
                                 motionActivityManager.queryActivityStarting(from: startSearchDatePicker.date,
                                                                             to: endSearchDatePicker.date,
                                                                             to: OperationQueue.main) { (motionActivities, error) in
-                                                                                
+                                    self.motion_arr=[]
                                                                                 for motionActivity in motionActivities! {
                                                                                     print(motionActivity)
                                                                                     let formatter = DateFormatter()
@@ -298,7 +298,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
                                                                                     let someDateTime = formatter.string(from: motionActivity.startDate)
                                                                                     var str = "Time: "+someDateTime+"\n"
                                                                                     str+="Event:\nstationary,"
-                                                                                    str+=String(motionActivity.stationary)+", walking,"+String(motionActivity.walking)+", running,"+String(motionActivity.running)+", automotive,"+String(motionActivity.automotive)+", cycling,"+String(motionActivity.cycling)
+                                                                                    str+=String(motionActivity.stationary)+", \n walking,"+String(motionActivity.walking)+", \n running,"+String(motionActivity.running)+", \n automotive,"+String(motionActivity.automotive)+", \n cycling,"+String(motionActivity.cycling)
                                                                                     self.motion_arr.append(str)
                                                                                 }
                                     self.checkoutDataTableView.reloadData()
