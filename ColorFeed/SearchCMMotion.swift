@@ -50,15 +50,15 @@ class SearchCMMotionViewController: UITableViewController {
 //            }
         let startSearchDatePicker: UIDatePicker = UIDatePicker()
         startSearchDatePicker.timeZone = NSTimeZone.local
-        startSearchDatePicker.frame = CGRect(x: 10, y: 50, width: 270, height: 100)
+        startSearchDatePicker.frame = CGRect(x: 10, y: 60, width: 200, height: 50)
             let alertController = UIAlertController(title: "Please select a start search date\n\n", message: nil, preferredStyle: .alert)
             alertController.view.addSubview(startSearchDatePicker)
             let selectAction = UIAlertAction(title: "Ok", style: .default, handler: { _ in
                 print("Selected Start Date: \(startSearchDatePicker.date)")
                 let endSearchDatePicker: UIDatePicker = UIDatePicker()
                 endSearchDatePicker.timeZone = NSTimeZone.local
-                endSearchDatePicker.frame = CGRect(x: 10, y: 50, width: 270, height: 100)
-                    let alertController = UIAlertController(title: "Please select a end search date\n\n", message: nil, preferredStyle: .alert)
+                endSearchDatePicker.frame = CGRect(x: 10, y: 60, width: 200, height: 50)
+                    let alertController = UIAlertController(title: "Please select an end search date\n\n", message: nil, preferredStyle: .alert)
                     alertController.view.addSubview(endSearchDatePicker)
                     let selectAction = UIAlertAction(title: "Ok", style: .default, handler: { _ in
                         print("Selected End Date: \(endSearchDatePicker.date)")
@@ -71,12 +71,12 @@ class SearchCMMotionViewController: UITableViewController {
                                                                             for motionActivity in motionActivities! {
                                                                                 print(motionActivity)
                                                                                 let formatter = DateFormatter()
-                                                                                formatter.dateFormat = "yyyy/MM/dd HH:mm"
+                                                                                formatter.dateFormat = "yyyy/MM/dd HH:mm.s"
                                                                                 formatter.timeZone = NSTimeZone.local
                                                                                 let someDateTime = formatter.string(from: motionActivity.startDate)
                                                                                 var str = "Time: "+someDateTime+"\n"
-                                                                                str+="Event:\nstationary,"
-                                                                                str+=String(motionActivity.stationary ?"1":"0")+",walking,"+String(motionActivity.walking ?"1":"0")+",running,"+String(motionActivity.running ?"1":"0")+",automotive,"+String(motionActivity.automotive ?"1":"0")+",cycling,"+String(motionActivity.cycling ?"1":"0")
+                                                                                str+="Event: Confidence,"+String(motionActivity.confidence.rawValue)+", u,"+String(motionActivity.unknown ?"1":"0")+", s,"
+                                                                                str+=String(motionActivity.stationary ?"1":"0")+", w,"+String(motionActivity.walking ?"1":"0")+", r,"+String(motionActivity.running ?"1":"0")+", a,"+String(motionActivity.automotive ?"1":"0")+", c,"+String(motionActivity.cycling ?"1":"0")
                                                                                 self.motion_arr.append(str)
                                                                             }
                                 self.CMDataTableView.reloadData()
@@ -147,7 +147,7 @@ class SearchCMMotionViewController: UITableViewController {
                 let endSearchDatePicker: UIDatePicker = UIDatePicker()
                 endSearchDatePicker.timeZone = NSTimeZone.local
                 endSearchDatePicker.frame = CGRect(x: 10, y: 50, width: 270, height: 100)
-                    let alertController = UIAlertController(title: "Please select a end search date\n\n", message: nil, preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "Please select an end search date\n\n", message: nil, preferredStyle: .alert)
                     alertController.view.addSubview(endSearchDatePicker)
                     let selectAction = UIAlertAction(title: "Ok", style: .default, handler: { _ in
                         print("Selected End Date: \(endSearchDatePicker.date)")
@@ -160,12 +160,12 @@ class SearchCMMotionViewController: UITableViewController {
                                                                             for motionActivity in motionActivities! {
                                                                                 print(motionActivity)
                                                                                 let formatter = DateFormatter()
-                                                                                formatter.dateFormat = "yyyy/MM/dd HH:mm"
+                                                                                formatter.dateFormat = "yyyy/MM/dd HH:mm.s"
                                                                                 formatter.timeZone = NSTimeZone.local
                                                                                 let someDateTime = formatter.string(from: motionActivity.startDate)
                                                                                 var str = "Time: "+someDateTime+"\n"
-                                                                                str+="Event:\nstationary,"
-                                                                                str+=String(motionActivity.stationary ?"1":"0")+",walking,"+String(motionActivity.walking ?"1":"0")+",running,"+String(motionActivity.running ?"1":"0")+",automotive,"+String(motionActivity.automotive ?"1":"0")+",cycling,"+String(motionActivity.cycling ?"1":"0")
+                                                                                str+="Event: Confidence,"+String(motionActivity.confidence.rawValue)+", u,"+String(motionActivity.unknown ?"1":"0")+", s,"
+                                                                                str+=String(motionActivity.stationary ?"1":"0")+", w,"+String(motionActivity.walking ?"1":"0")+", r,"+String(motionActivity.running ?"1":"0")+", a,"+String(motionActivity.automotive ?"1":"0")+", c,"+String(motionActivity.cycling ?"1":"0")
                                                                                 self.motion_arr.append(str)
                                                                             }
                                 self.CMDataTableView.reloadData()

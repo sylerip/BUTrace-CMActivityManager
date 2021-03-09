@@ -50,7 +50,7 @@
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="oEq-d2-XvV">
                             <rect key="frame" x="137.5" y="5.5" width="139" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="Search Time"/>
+                            <state key="normal" title="Search Log"/>
                             <connections>
                                 <action selector="searchPage:" destination="g8p-ft-a8D" eventType="touchUpInside" id="JkD-VM-uwK"/>
                             </connections>
