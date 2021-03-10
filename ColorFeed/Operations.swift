@@ -15,7 +15,7 @@ class CoreMotionOperation: Operation {
     var flag = true
     var callflag = ""
     let init_grace_period = 5.0
-    
+    let leadtime = 10.0
     init(callflag: String) {
         self.callflag = callflag
     }
@@ -29,9 +29,24 @@ class CoreMotionOperation: Operation {
                                                             to: Date(),
                                                             to: OperationQueue.main) { (motionActivities, error) in
                                                                 
-                                                                for motionActivity in motionActivities! {
-                                                                    print(motionActivity)
-                                                                    if (motionActivity.confidence == CMMotionActivityConfidence.high  )&&(motionActivity.running||motionActivity.walking)&&motionActivity.automotive==false {
+//                                                                for motionActivity in motionActivities! {
+//                                                                    print(motionActivity)
+//                                                                    if (motionActivity.confidence == CMMotionActivityConfidence.high  )&&(motionActivity.running||motionActivity.walking)&&motionActivity.automotive==false {
+//                                                                        // may use the following logic to integrate with X-hour auto check-out
+//                                                                        // if motionActivity.startDate > q_time.addingTimeInterval(X-hour) {
+//                                                                        //     use X-hour for check-out
+//                                                                        //     cancel BGTaskScheduler
+//                                                                        //     break
+//                                                                        // }
+//                                                                        if motionActivity.startDate > q_time.addingTimeInterval(self.init_grace_period) {
+//                                                                            self.checkout(activity: motionActivity)
+//                                                                            break
+//                                                                        }
+//                                                                    }
+//                                                                }
+                                                                for i in 0..<motionActivities!.count{
+                                                                    print(motionActivities![i])
+                                                                    if (motionActivities![i].confidence == CMMotionActivityConfidence.high  )&&(motionActivities![i].running||motionActivities![i].walking) {
                                                                         // may use the following logic to integrate with X-hour auto check-out
                                                                         // if motionActivity.startDate > q_time.addingTimeInterval(X-hour) {
                                                                         //     use X-hour for check-out
@@ -39,8 +54,8 @@ class CoreMotionOperation: Operation {
                                                                         //     break
                                                                         // }
 //                                                                        print(motionActivity)
-                                                                        if motionActivity.startDate > q_time.addingTimeInterval(self.init_grace_period) {
-                                                                            self.checkout(activity: motionActivity)
+                                                                        if motionActivities![i+1].startDate>motionActivities![i].startDate.addingTimeInterval(self.leadtime) && motionActivities![i].startDate > q_time.addingTimeInterval(self.init_grace_period) {
+                                                                            self.checkout(activity: motionActivities![i])
                                                                             break
                                                                         }
                                                                     }
