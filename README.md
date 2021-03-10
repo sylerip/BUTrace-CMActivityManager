@@ -27,8 +27,8 @@ In this sample project, the code below is packed as an operation and called from
                                                                         //     break
                                                                         // }
 //                                                                        print(motionActivity)
-                                                                        if motionActivity.startDate > q_time.addingTimeInterval(self.init_grace_period) {
-                                                                            self.checkout(activity: motionActivity)
+                                                                        if  ((i < motionActivities!.count-1 && motionActivities![i+1].startDate > motionActivities![i].startDate.addingTimeInterval(self.leadtime))||(i == motionActivities!.count-1 && Date() > motionActivities![i].startDate.addingTimeInterval(self.leadtime))) && motionActivities![i].startDate > q_time.addingTimeInterval(self.init_grace_period) {
+                                                                            self.checkout(activity: motionActivities![i])
                                                                             break
                                                                         }
                                                                     }
