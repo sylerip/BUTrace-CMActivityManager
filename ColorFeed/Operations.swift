@@ -54,7 +54,9 @@ class CoreMotionOperation: Operation {
                                                                         //     break
                                                                         // }
 //                                                                        print(motionActivity)
-                                                                        if motionActivities![i+1].startDate>motionActivities![i].startDate.addingTimeInterval(self.leadtime) && motionActivities![i].startDate > q_time.addingTimeInterval(self.init_grace_period) {
+                                                                        //(i<motionActivities!.count ? motionActivities![i+1].startDate:Date()) > motionActivities![i].startDate.addingTimeInterval(self.leadtime)
+                                                                        print(i)
+                                                                        if  ((i < motionActivities!.count-1 && motionActivities![i+1].startDate > motionActivities![i].startDate.addingTimeInterval(self.leadtime))||(i == motionActivities!.count-1 && Date() > motionActivities![i].startDate.addingTimeInterval(self.leadtime))) && motionActivities![i].startDate > q_time.addingTimeInterval(self.init_grace_period) {
                                                                             self.checkout(activity: motionActivities![i])
                                                                             break
                                                                         }

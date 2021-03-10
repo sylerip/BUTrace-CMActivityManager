@@ -137,7 +137,7 @@ class FeedTableViewController: UITableViewController, NSFetchedResultsController
     @objc func reloadData() {
         print("reloadData")
         
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
                // Code you want to be delayed
                 if (self.sharepreference.object(forKey: "checkout_act_arr") != nil)  {
                     self.checkout_act_arr = self.sharepreference.object(forKey: "checkout_act_arr")as! Array<String>
