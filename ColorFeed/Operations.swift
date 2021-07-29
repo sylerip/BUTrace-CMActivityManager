@@ -55,7 +55,7 @@ class CoreMotionOperation: Operation {
                                                                         // }
 //                                                                        print(motionActivity)
                                                                         //(i<motionActivities!.count ? motionActivities![i+1].startDate:Date()) > motionActivities![i].startDate.addingTimeInterval(self.leadtime)
-                                                                        //leadtime is the time for classify if the activity is valid as checkout activity
+                                                                        //leadtime is the time for classifing if the activity is valid and satisfy as checkout activity
                                                                         print(i)
                                                                         if  ((i < motionActivities!.count-1 && motionActivities![i+1].startDate > motionActivities![i].startDate.addingTimeInterval(self.leadtime))||(i == motionActivities!.count-1 && Date() > motionActivities![i].startDate.addingTimeInterval(self.leadtime))) && motionActivities![i].startDate > q_time.addingTimeInterval(self.init_grace_period) {
                                                                             self.checkout(activity: motionActivities![i])
